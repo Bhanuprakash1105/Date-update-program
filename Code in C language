@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct date
+{
+	int day;
+	int month;
+	int year;
+};
+
+struct date update(struct date);
+
+int main()
+{
+	int c;
+	struct date d;
+	char line[20];
+	
+Repeat:	printf("\nEnter a date(dd/mm/yyyy) : ");
+	gets(line);
+	sscanf(line,"%d/%d/%d", &d.day, &d.month, &d.year);
+	
+	if( d.day <= 0 || d.month <= 0 || d.year <= 0) {
+		fprintf(stderr,"\n< Incorect input > < Enter in given format >\n\n");
+		goto Repeat;
+	}else if( (d.day > 31) || (d.month > 12) ) {
+		fprintf(stderr,"\n< Incorect input > < Enter valid date >\n\n");
+		goto Repeat;
+	}
+
+Option: printf("\nChoose one option:\n");
+	printf("\n Enter (1) for updating date\n");
+	printf("\n Enter (2) for displaying date\n");
+	printf("\n Enter (3) to exit program\n");
+	printf(">> ");
+	scanf("%d",&c);
+
+	switch (c) {
+		
+		case 1:
+			d = update(d);
+			printf("\nUpdated Date : %d/%d/%d\n\n", d.day, d.month, d.year);
+			break;
+		case 2:
+			printf("\nDATE : %d/%d/%d\n\n", d.day, d.month, d.year);
+
+			break;
+		case 3:
+			exit(0);
+
+		default:
+			fprintf(stderr,"\n< Incorrect Option > < Choose again >\n\n");
+			goto Option;
+	}	
+	
+	goto Option;
+
+}
+
+struct date update(struct date d)
+{
+	if(d.year%4 == 0 || d.year%400 == 0) {
+		if (d.month == 2) {
+			if( (d.day >= 1) && (d.day < 29) ) {
+				d.day++;
+			} else if(d.day = 29) {
+				d.month++;
+				d.day = 1;
+			}
+		} else if (d.month == 12) {
+			if( (d.day >= 1) && (d.day < 31) ) {
+				d.day++;
+			} else if(d.day = 31) {
+				d.year++;
+				d.day = 1;
+				d.month = 1;
+			}
+		} else if ((d.month == 1)||(d.month == 3)||(d.month == 5)||(d.month == 7)||(d.month == 8)||(d.month == 10)) {
+			if( (d.day >= 1) && (d.day < 31) ) {
+				d.day++;
+			} else if(d.day = 31) {
+				d.month++;
+				d.day = 1;
+			}
+		} else {
+			if( (d.day >= 1) && (d.day < 30) ) {
+				d.day++;
+			} else if(d.day = 30) {
+				d.month++;
+				d.day = 1;
+			}
+		}
+	} else {
+		if (d.month == 2) {
+			if( (d.day >= 1) && (d.day < 28) ) {
+				d.day++;
+			} else if(d.day = 28) {
+				d.month++;
+				d.day = 1;
+			}
+		} else if (d.month == 12) {
+			if( (d.day >= 1) && (d.day < 31) ) {
+				d.day++;
+			} else if(d.day = 31) {
+				d.year++;
+				d.day = 1;
+				d.month = 1;
+			}
+		} else if ((d.month == 1)||(d.month == 3)||(d.month == 5)||(d.month == 7)||(d.month == 8)||(d.month == 10)) {
+			if( (d.day >= 1) && (d.day < 31) ) {
+				d.day++;
+			} else if(d.day = 31) {
+				d.month++;
+				d.day = 1;
+			}
+		} else {
+			if( (d.day >= 1) && (d.day < 30) ) {
+				d.day++;
+			} else if(d.day = 30) {
+				d.month++;
+				d.day = 1;
+			}
+		}
+	}
+	return (d);
+}
